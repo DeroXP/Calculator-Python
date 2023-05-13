@@ -102,6 +102,16 @@ def calculate_absolute():
     result_label.insert(tk.END, str(result))
     update_button_text()
 
+def calculate_reciprocal():
+    number = float(result_label.get())
+    if number != 0:
+        result = 1 / number
+        result_label.delete(0, tk.END)
+        result_label.insert(tk.END, str(result))
+    else:
+        result_label.delete(0, tk.END)
+        result_label.insert(tk.END, "Error: Division by zero")
+
 def calculate_inverse():
     number = float(result_label.get())
     if number != 0:
@@ -121,7 +131,7 @@ def calculate_pi():
 def update_button_text():
     buttons = number_buttons + operation_buttons + function_buttons
     for button in buttons:
-        button_text = button["text"]
+        button_text = button.cget("text")
         button.configure(text=button_text, font=button_font)
 
 # Create the main window
@@ -169,19 +179,27 @@ for operation_data in operation_buttons:
 
 # Create function buttons
 function_buttons = [
-    ("√", 1, 4), ("^2", 2, 4), ("%", 3, 4),
-    ("sin", 1, 5), ("cos", 2, 5), ("tan", 3, 5),
-    ("log", 4, 4), ("floor", 4, 5),
-    ("!", 5, 4), ("|x|", 5, 5),
-    ("1/x", 5, 0), ("^", 5, 1),
-    ("π", 5, 2)
+    ("√", calculate_square_root, 1, 4),
+    ("^2", calculate_exponentiation, 2, 4),
+    ("%", calculate_percentage, 3, 4),
+    ("sin", calculate_sin, 1, 5),
+    ("cos", calculate_cos, 2, 5),
+    ("tan", calculate_tan, 3, 5),
+    ("log", calculate_log, 4, 4),
+    ("floor", calculate_floor, 4, 5),
+    ("!", calculate_factorial, 5, 4),
+    ("|x|", calculate_absolute, 5, 5),
+    ("1/x", calculate_reciprocal, 5, 0),
+    ("^", lambda: button_click("^"), 5, 1),
+    ("π", calculate_pi, 5, 2)
 ]
 
-for function_data in function_buttons:
-    function_text, row, col = function_data
+# Configure function buttons
+for button_data in function_buttons:
+    button_text, button_command, row, col = button_data
     button = tk.Button(
-        window, text=function_text, command=lambda text=function_text: button_click(text),
-        bg="#7289DA", fg="white", font=button_font , padx=15, pady=10
+        window, text=button_text, command=button_command,
+        bg="#7289DA", fg="white", font=button_font, padx=15, pady=10
     )
     button.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
 
