@@ -134,20 +134,20 @@ def update_button_text():
         button_text = button.cget("text")
         button.configure(text=button_text, font=button_font)
 
-# Create the main window
+
 window = tk.Tk()
 window.title("Calculator")
-window.config(bg="#36393F")  # Set background color
+window.config(bg="#36393F")  
 
-# Custom font for the buttons and result label
+
 button_font = ("Arial", 14, "bold")
 result_font = ("Arial", 24)
 
-# Create a label to display the result
+
 result_label = tk.Entry(window, bg="#36393F", fg="white", font=result_font, justify="right", bd=0)
 result_label.grid(row=0, column=0, columnspan=6, padx=10, pady=10, sticky="nsew")
 
-# Create number buttons
+
 number_buttons = [
     ("7", 1, 0), ("8", 1, 1), ("9", 1, 2),
     ("4", 2, 0), ("5", 2, 1), ("6", 2, 2),
@@ -163,7 +163,7 @@ for button_data in number_buttons:
     )
     button.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
 
-# Create operation buttons
+
 operation_buttons = [
     ("+", 1, 3), ("-", 2, 3), ("*", 3, 3), ("/", 4, 3),
     ("=", 4, 2)
@@ -177,7 +177,7 @@ for operation_data in operation_buttons:
     )
     button.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
 
-# Create function buttons
+
 function_buttons = [
     ("√", calculate_square_root, 1, 4),
     ("^2", calculate_exponentiation, 2, 4),
@@ -194,7 +194,7 @@ function_buttons = [
     ("π", calculate_pi, 5, 2)
 ]
 
-# Configure function buttons
+
 for button_data in function_buttons:
     button_text, button_command, row, col = button_data
     button = tk.Button(
@@ -203,25 +203,25 @@ for button_data in function_buttons:
     )
     button.grid(row=row, column=col, padx=5, pady=5, sticky="nsew")
 
-# Create clear button
+
 clear_button = tk.Button(
     window, text="C", command=clear,
     bg="#FF4E4E", fg="white", font=button_font, padx=15, pady=10
 )
 clear_button.grid(row=5, column=1, padx=5, pady=5, sticky="nsew")
 
-# Create pi button
+
 pi_button = tk.Button(
     window, text="π", command=calculate_pi,
     bg="#2C2F33", fg="white", font=button_font, padx=15, pady=10
 )
 pi_button.grid(row=5, column=2, padx=5, pady=5, sticky="nsew")
 
-# Configure column and row weights for resizing
+
 for i in range(6):
     window.grid_columnconfigure(i, weight=1)
 for i in range(6):
     window.grid_rowconfigure(i, weight=1)
 
-# Start the main event loop
+
 window.mainloop()
